@@ -395,11 +395,11 @@ contract StakedUSDeV2CooldownTest is Test, IERC20Events {
     uint256 rewardAmount,
     uint256 waitSeconds
   ) public {
-    vm.assume(
-      amount1 >= 100 ether && amount2 > 0 && amount3 > 0 && rewardAmount > 0 && waitSeconds <= 9 hours
-      // 100 trillion USD with 18 decimals
-      && amount1 < 1e32 && amount2 < 1e32 && amount3 < 1e32 && rewardAmount < 1e32
-    );
+    amount1 = bound(amount1, 100 ether, 1e32 - 1);
+amount2 = bound(amount2, 1, 1e32 - 1);
+amount3 = bound(amount3, 1, 1e32 - 1);
+rewardAmount = bound(rewardAmount, 1, 1e32 - 1);
+waitSeconds = bound(waitSeconds, 0, 9 hours);
 
     uint256 totalContributions = amount1;
 
