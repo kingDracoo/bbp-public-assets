@@ -20,9 +20,17 @@ jobs:
         with:
           version: stable
 
-      - name: Install dependencies
+      - name: Enter contracts project
+        working-directory: contracts
         run: |
           git submodule update --init --recursive
 
+      - name: Install forge dependencies
+        working-directory: contracts
+        run: |
+          forge install
+
       - name: Run Foundry tests
-        run: forge test -vvv
+        working-directory: contracts
+        run: |
+          forge test -vvv
